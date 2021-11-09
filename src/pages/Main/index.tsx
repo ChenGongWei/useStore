@@ -19,6 +19,8 @@ const Main: React.FC<HomeProp> = () => {
         age: state.age
     }))
 
+    console.log('更新');
+    
     return (
         <div className={style.body}>
             <h2>Main 页面</h2>

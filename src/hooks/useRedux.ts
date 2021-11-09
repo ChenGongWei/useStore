@@ -12,7 +12,7 @@ class ReduxHooksStore {
     state: null
     /** 修改数据源的方法 */
     reducer: Function
-    /** 注册的 connect 集合 */
+    /** 绑定的 connect 集合 */
     mapConnects: {
         [key: string]: any
     }
@@ -48,8 +48,8 @@ class ReduxHooksStore {
     }
 
     /**
-     * 注册connect
-     * @param connectCurrent 要注册的值
+     * 绑定connect
+     * @param connectCurrent 要绑定的对象
      * @returns 返回connect的name
      */
     subscribe = (connectCurrent: any) => {
@@ -110,9 +110,9 @@ export function useStore(reducer:Function, initState:any) {
 
 
 /**
- * 获取store
- * @param mapStoreToState 获取state的函数
- * @returns 返回获取的state
+ * 获取 state 和 dispatch
+ * @param mapStoreToState 获取订阅state的函数
+ * @returns 返回 state 和 dispatch
  */
 export function useConnect(mapStoreToState = (state:any) => {}) {
 
@@ -128,7 +128,7 @@ export function useConnect(mapStoreToState = (state:any) => {}) {
     /** 用于重新渲染 */
     const [ ,forceUpdate] = React.useState({})
 
-    /** 需要注册的 connect */
+    /** 需要绑定的 connect */
     const connectValue = React.useMemo(() => {
         const state = {
             /** state 缓存，用于判断 dispatch 时新旧 state 是否发生变化 */
@@ -157,7 +157,7 @@ export function useConnect(mapStoreToState = (state:any) => {}) {
     }, [stateValue, mapStoreToState])
 
     React.useEffect(() => {
-        /** 组件挂载时 注册 connect */
+        /** 组件挂载时 绑定 connect */
         const name = subscribe(connectValue)
         return () => {
             /** 组件销毁时 解绑 connect */
