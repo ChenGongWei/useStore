@@ -1,52 +1,45 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { Grid } from 'antd-mobile'
+import { List, Input, Button } from 'antd-mobile'
+import { useConnect } from '@/lib/useRedux'
 
-import Block from '@/components/Block'
 import style from './style.module.scss'
 
-interface ComponentItem {
-    /** 组件名 */
-    name: string
-    /** 跳转路径 */
-    path: string
-}
 
-interface ComponentGroup {
-    /** 标题 */
-    title: string
-    /** 跳转路径 */
-    children: ComponentItem[]
-}
 
-interface HomeProp {}
+
+interface HomeProp { }
 
 const Main: React.FC<HomeProp> = () => {
 
     const history = useHistory()
 
-    const data: ComponentGroup[] = []
+    const [state, dispatch] = useConnect(state => ({
+        name: state.name,
+        age: state.age
+    }))
 
     return (
         <div className={style.body}>
-            {data.map(group => (
-                <Block title={group.title} key={group.title}>
-                    <Grid columns={4}>
-                        {group.children.map(child => (
-                            <Grid.Item key={child.name}>
-                                <span
-                                    className={style.item}
-                                    onClick={() => history.push(child.path)}>
-                                    {child.name}
-                                </span>
-                            </Grid.Item>
-                        ))}
-                    </Grid>
-                </Block>
-            ))}
+            <h2>Main 页面</h2>
+            <List
+                style={{
+                    '--prefix-width': '6em',
+                }}
+            >
+                <List.Item prefix='用户名'>
+                    <Input value={state.name} placeholder='请输入用户名' clearable onChange={val => dispatch({ type: 'setName', payload: val })} />
+                </List.Item>
+                <List.Item prefix='年龄'>
+                    <Input value={state.age} placeholder='请输入年龄' clearable type='number' onChange={val => dispatch({ type: 'setAge', payload: val })} />
+                </List.Item>
+            </List>
+
+            <Button onClick={() => history.push('/detail')} color='primary'>前往详情页</Button>
         </div>
+
     )
 }
 
- 
+
 export default Main

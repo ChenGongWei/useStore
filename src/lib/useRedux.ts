@@ -23,12 +23,14 @@ class ReduxHooksStore {
         this.reducer = reducer
         this.state = initState
         this.mapConnects = {}
+        console.log(this, 999);
+        
     }
 
     /**
      * 更新需要更新的组件
      */
-    publicRender() {
+    publicRender = () => {
         /* 批量更新 */
         unstable_batchedUpdates(() => {
             Object.keys(this.mapConnects).forEach(name => {
@@ -42,7 +44,7 @@ class ReduxHooksStore {
      * 更新state
      * @param action 更新方式
      */
-    dispatch(action: string) {
+    dispatch = (action: string) => {
         this.state = this.reducer(this.state, action)
         this.publicRender()
     }
@@ -52,7 +54,7 @@ class ReduxHooksStore {
      * @param connectCurrent 要注册的值
      * @returns 返回connect的name
      */
-    subscribe(connectCurrent: any) {
+    subscribe = (connectCurrent: any) => {
         const connectName = this.name + (++this.id)
         this.mapConnects[connectName] = connectCurrent
         return connectName
@@ -62,7 +64,7 @@ class ReduxHooksStore {
      * 解除绑定
      * @param connectName 需要解绑的connect的name
      */
-    unSubscribe(connectName: string) {
+    unSubscribe = (connectName: string) => {
         delete this.mapConnects[connectName]
     }
 
@@ -71,7 +73,7 @@ class ReduxHooksStore {
      * @param mapStoreToState 接收 state 为参数的函数
      * @returns 
      */
-    getInitState(mapStoreToState: Function) {
+    getInitState = (mapStoreToState: Function) => {
         return mapStoreToState(this.state)
     }
 
@@ -79,7 +81,7 @@ class ReduxHooksStore {
      * 对外传递的接口
      * @returns 
      */
-    ecportStore() {
+    ecportStore = () => {
         return {
             dispatch: this.dispatch.bind(this),
             subscribe: this.subscribe.bind(this),
