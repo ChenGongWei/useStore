@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { ReduxContext, useStore } from '@/lib/useRedux'
+import { ReduxContext, useStore } from '@/hooks/useRedux'
 import Loading from "@/components/Loading"
 import Routes from "./routes"
 

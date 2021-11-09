@@ -1,7 +1,6 @@
-import React from "react"
 import { useHistory } from "react-router-dom"
 import { List, Input, Button } from 'antd-mobile'
-import { useConnect } from "@/lib/useRedux"
+import { useConnect } from "@/hooks/useRedux"
 
 
 const Detail = () => {

@@ -23,8 +23,6 @@ class ReduxHooksStore {
         this.reducer = reducer
         this.state = initState
         this.mapConnects = {}
-        console.log(this, 999);
-        
     }
 
     /**
@@ -81,7 +79,7 @@ class ReduxHooksStore {
      * 对外传递的接口
      * @returns 
      */
-    ecportStore = () => {
+    exportStore = () => {
         return {
             dispatch: this.dispatch.bind(this),
             subscribe: this.subscribe.bind(this),
@@ -105,7 +103,7 @@ export function useStore(reducer:Function, initState:any) {
     const store = React.useRef<any>(null)
     if(!store.current) {
         /** 创建一个 store 对象 */
-        store.current = new ReduxHooksStore(reducer, initState)
+        store.current = new ReduxHooksStore(reducer, initState).exportStore()
     }
     return store.current
 }
